@@ -660,8 +660,32 @@ static void osd_input_update_internal_bitmasks(void)
                   input.analog[i+1][0] = (rx + 0x8000) >> 8;
                else 
                   input.analog[i+1][0] = (0x7fff - ry) >> 8;
-               input.analog[i][0] = (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X) + 0x8000) >> 8;
-               input.analog[i][1] = (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) >> 8;
+	       if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_UP))
+		  input.analog[i][1] = 0;
+	       else if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_DOWN))
+		  input.analog[i][1] = 255;
+	       else if (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_IS_OFFSCREEN))
+		  input.analog[i][1] = 128;
+	       else
+	       {
+		  if (config.invert_xe1ap == 1)
+                     input.analog[i][1] = 255 - (config.xe1apyoffset + config.xe1apyratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) / 256.f);
+		  else
+		     input.analog[i][1] = config.xe1apyoffset + config.xe1apyratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) / 256.f; 
+	       }
+	       if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_LEFT))
+		  input.analog[i][0] = 0;
+	       else if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_RIGHT))
+		  input.analog[i][0] = 255;
+	       else if (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_IS_OFFSCREEN))
+		  input.analog[i][0] = 128;
+	       else
+                  input.analog[i][0] = config.xe1apxoffset + config.xe1apxratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X) + 0x8000) / 256.f;
+
+               if (input.analog[i][0] < 0) input.analog[i][0] = 0;
+               if (input.analog[i][0] > 255) input.analog[i][0] = 255;
+               if (input.analog[i][1] < 0) input.analog[i][1] = 0;
+               if (input.analog[i][1] > 255) input.analog[i][1] = 255;
 
                if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_R))
                   temp |= INPUT_XE_A;
@@ -882,8 +906,32 @@ static void osd_input_update_internal(void)
                   input.analog[i+1][0] = (rx + 0x8000) >> 8;
                else 
                   input.analog[i+1][0] = (0x7fff - ry) >> 8;
-               input.analog[i][0] = (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X) + 0x8000) >> 8;
-               input.analog[i][1] = (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) >> 8;
+	       if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP))
+		  input.analog[i][1] = 0;
+	       else if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_DOWN))
+		  input.analog[i][1] = 255;
+	       else if (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_IS_OFFSCREEN))
+		  input.analog[i][1] = 128;
+	       else
+	       {
+		  if (config.invert_xe1ap == 1)
+                     input.analog[i][1] = 255 - (config.xe1apyoffset + config.xe1apyratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) / 256.f);
+		  else
+		     input.analog[i][1] = config.xe1apyoffset + config.xe1apyratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) / 256.f; 
+	       }
+	       if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT))
+		  input.analog[i][0] = 0;
+	       else if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_RIGHT))
+		  input.analog[i][0] = 255;
+	       else if (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_IS_OFFSCREEN))
+		  input.analog[i][0] = 128;
+	       else
+                  input.analog[i][0] = config.xe1apxoffset + config.xe1apxratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X) + 0x8000) / 256.f;
+
+               if (input.analog[i][0] < 0) input.analog[i][0] = 0;
+               if (input.analog[i][0] > 255) input.analog[i][0] = 255;
+               if (input.analog[i][1] < 0) input.analog[i][1] = 0;
+               if (input.analog[i][1] > 255) input.analog[i][1] = 255;
 
                if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R))
                   temp |= INPUT_XE_A;
@@ -1976,6 +2024,30 @@ static void check_variables(bool first_run)
       config.gun_cursor = 1;
   }
 
+  var.key = "genesis_plus_gx_xe1ap_x_ratio";
+  environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var);
+  {
+    config.xe1apxratio = atof(var.value);
+  }
+
+  var.key = "genesis_plus_gx_xe1ap_y_ratio";
+  environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var);
+  {
+    config.xe1apyratio = atof(var.value);
+  }
+
+  var.key = "genesis_plus_gx_xe1ap_x_offset";
+  environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var);
+  {
+    config.xe1apxoffset = atof(var.value) / 100.0 * 255.0;
+  }
+
+  var.key = "genesis_plus_gx_xe1ap_y_offset";
+  environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var);
+  {
+    config.xe1apyoffset = atof(var.value) / 100.0 * 255.0;
+  }
+
   var.key = "genesis_plus_gx_gun_input";
   environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var);
   {
@@ -1992,6 +2064,15 @@ static void check_variables(bool first_run)
       config.invert_mouse = 0;
     else
       config.invert_mouse = 1;
+  }
+
+  var.key = "genesis_plus_gx_invert_xe1ap";
+  environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var);
+  {
+    if (!var.value || !strcmp(var.value, "disabled"))
+      config.invert_xe1ap = 0;
+    else
+      config.invert_xe1ap = 1;
   }
 
   var.key = "genesis_plus_gx_left_border";
