@@ -793,7 +793,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
    },
    {
       "genesis_plus_gx_xe1ap_x_ratio",
-      "XE-1 AP X Ratio.",
+      "XE-1 AP X Ratio",
       NULL,
       "Set the ratio of the X-axis of the left stick of the XE-1 AP input device type.",
       NULL,
@@ -836,7 +836,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
    },
    {
       "genesis_plus_gx_xe1ap_y_ratio",
-      "XE-1 AP Y Ratio.",
+      "XE-1 AP Y Ratio",
       NULL,
       "Set the ratio of the Y-axis of the left stick of the XE-1 AP input device type.",
       NULL,
@@ -879,7 +879,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
    },
    {
       "genesis_plus_gx_xe1ap_x_offset",
-      "XE-1 AP X Offset.",
+      "XE-1 AP X Offset",
       NULL,
       "Set the offset of the X-axis of the left stick of the XE-1 AP input device type.",
       NULL,
@@ -952,7 +952,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
    },
    {
       "genesis_plus_gx_xe1ap_y_offset",
-      "XE-1 AP Y Offset.",
+      "XE-1 AP Y Offset",
       NULL,
       "Set the offset of the Y-axis of the left stick of the XE-1 AP input device type.",
       NULL,
