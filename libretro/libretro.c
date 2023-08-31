@@ -579,12 +579,11 @@ static void osd_input_update_internal_bitmasks(void)
          case DEVICE_PADDLE:
             if (config.circularpaddle == 1)
 				{
-				int ox = 127; //origin of circle on x-axis
-				int oy = 127; ////origin of circle on y-axis
-				int paddlemax = 256;
-				int rx = 256 - (config.lightgunxoffset + config.lightgunxratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X) + 0x8000) / 256.f);
-				int ry = (config.lightgunyoffset + config.lightgunyratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) / 256.f);
-				input.analog[i][0] = (int)((atan2(rx - ox, ry - oy) + 2*M_PI) * paddlemax / (2*M_PI)) % paddlemax;
+            			goto Cleanup;
+            			Cleanup: ; //This is an empty statement.
+	    			int rx = input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X);
+            			int ry = input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y);
+            			input.analog[i][0] = (int)((- atan2(-ry,rx * 4 / 3) - (M_PI / 2)) / (2 * M_PI) * 256) % 256;
 				}
 			else
 				input.analog[i][0] = config.lightgunxoffset + config.lightgunxratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X) + 0x8000) / 256.f;
@@ -673,7 +672,7 @@ static void osd_input_update_internal_bitmasks(void)
 
          case DEVICE_XE_1AP:
             {
-	       if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_X))
+	       if ((ret & (1 << RETRO_DEVICE_ID_JOYPAD_X)) && !(ret & (1 << RETRO_DEVICE_ID_JOYPAD_SELECT)))
 		  retro_set_controller_port_device(player, RETRO_DEVICE_MDPAD_3B);
                   int rx = input.analog[i][0] = input_state_cb(player, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_X);
                   int ry = input.analog[i][1] = input_state_cb(player, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_Y);
@@ -847,7 +846,21 @@ static void osd_input_update_internal(void)
             break;
 
          case DEVICE_PADDLE:
-            input.analog[i][0] = 255 - (((atan2(-input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y),input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X)) + (M_PI / 2)) / (2 * M_PI) + 1/4) * 255);
+            if (config.circularpaddle == 1)
+				{
+            			goto Cleanup;
+            			Cleanup: ; //This is an empty statement.
+	    			int rx = input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X);
+            			int ry = input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y);
+            			input.analog[i][0] = (int)((- atan2(-ry,rx * 4 / 3) - (M_PI / 2)) / (2 * M_PI) * 256) % 256;
+				}
+			else
+				input.analog[i][0] = config.lightgunxoffset + config.lightgunxratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X) + 0x8000) / 256.f;
+
+			if (input.analog[i][0] > 255)
+				input.analog[i][0] = 255;
+			if (input.analog[i][0] < 0)
+				input.analog[i][0] = 0;
 
             if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_B))
                temp |= INPUT_BUTTON1;
@@ -923,7 +936,7 @@ static void osd_input_update_internal(void)
 
          case DEVICE_XE_1AP:
             {
-               if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_X))
+               if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_X) && !input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT))
 	          retro_set_controller_port_device(player, RETRO_DEVICE_MDPAD_3B);
                   int rx = input.analog[i][0] = input_state_cb(player, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_X);
                   int ry = input.analog[i][1] = input_state_cb(player, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT, RETRO_DEVICE_ID_ANALOG_Y);
