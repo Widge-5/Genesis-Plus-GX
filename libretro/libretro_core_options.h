@@ -795,7 +795,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
       "genesis_plus_gx_lightgun_x_ratio",
       "Lightgun X Ratio",
       NULL,
-      "Set the ratio of the X-axis of the Lightgun, including Lightgun as XE-1 AP and MS Paddle.",
+      "Set the ratio of the X-axis of the Lightgun, including Lightgun as XE-1 AP, MS Paddle and Graphic Board.",
       NULL,
       "input",
       {
@@ -858,7 +858,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
       "genesis_plus_gx_lightgun_y_ratio",
       "Lightgun Y Ratio",
       NULL,
-      "Set the ratio of the Y-axis of the Lightgun, including Lightgun as XE-1 AP and MS Paddle.",
+      "Set the ratio of the Y-axis of the Lightgun, including Lightgun as XE-1 AP, MS Paddle and Graphic Board.",
       NULL,
       "input",
       {
@@ -921,7 +921,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
       "genesis_plus_gx_lightgun_x_offset",
       "Lightgun X Offset",
       NULL,
-      "Set the offset of the X-axis of the Lightgun, including Lightgun as XE-1 AP and MS Paddle.",
+      "Set the offset of the X-axis of the Lightgun, including Lightgun as XE-1 AP, MS Paddle and Graphic Board.",
       NULL,
       "input",
       {
@@ -1055,7 +1055,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
       "genesis_plus_gx_lightgun_y_offset",
       "Lightgun Y Offset",
       NULL,
-      "Set the offset of the Y-axis of the Lightgun, including Lightgun as XE-1 AP and MS Paddle.",
+      "Set the offset of the Y-axis of the Lightgun, including Lightgun as XE-1 AP, MS Paddle and Graphic Board.",
       NULL,
       "input",
       {

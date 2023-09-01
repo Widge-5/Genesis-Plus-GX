@@ -641,8 +641,17 @@ static void osd_input_update_internal_bitmasks(void)
             break;
 
          case DEVICE_TEREBI:
-            input.analog[i][0] = ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_X) + 0x7fff) * 250) / 0xfffe;
-            input.analog[i][1] = ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_Y) + 0x7fff) * 250) / 0xfffe;
+            input.analog[i][0] = config.lightgunxoffset + config.lightgunxratio * ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_X) + 0x7fff) * 250) / 0xfffe;
+            input.analog[i][1] = config.lightgunyoffset + config.lightgunyratio * ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_Y) + 0x7fff) * 250) / 0xfffe;
+
+            if (input.analog[i][0] > 250)
+			   input.analog[i][0] = 250;
+            if (input.analog[i][0] < 0)
+	           input.analog[i][0] = 0;
+            if (input.analog[i][1] > 250)
+	           input.analog[i][1] = 250;
+            if (input.analog[i][1] < 0)
+	           input.analog[i][1] = 0;
 
             if (input_state_cb(player, RETRO_DEVICE_MOUSE, 0, RETRO_DEVICE_ID_MOUSE_LEFT))
                temp |= INPUT_BUTTON1;
@@ -654,8 +663,17 @@ static void osd_input_update_internal_bitmasks(void)
             break;
 
          case DEVICE_GRAPHIC_BOARD:
-            input.analog[i][0] = ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_X) + 0x7fff) * 255) / 0xfffe;
-            input.analog[i][1] = ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_Y) + 0x7fff) * 255) / 0xfffe;
+            input.analog[i][0] = config.lightgunxoffset + config.lightgunxratio * ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_X) + 0x7fff) * 255) / 0xfffe;
+            input.analog[i][1] = config.lightgunyoffset + config.lightgunyratio * ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_Y) + 0x7fff) * 255) / 0xfffe;
+
+            if (input.analog[i][0] > 255)
+			   input.analog[i][0] = 255;
+            if (input.analog[i][0] < 0)
+	           input.analog[i][0] = 0;
+            if (input.analog[i][1] > 255)
+	           input.analog[i][1] = 255;
+            if (input.analog[i][1] < 0)
+	           input.analog[i][1] = 0;
 
             if (input_state_cb(player, RETRO_DEVICE_MOUSE, 0, RETRO_DEVICE_ID_MOUSE_LEFT))
                temp |= INPUT_GRAPHIC_PEN;
@@ -905,8 +923,17 @@ static void osd_input_update_internal(void)
             break;
 
          case DEVICE_TEREBI:
-            input.analog[i][0] = ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_X) + 0x7fff) * 250) / 0xfffe;
-            input.analog[i][1] = ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_Y) + 0x7fff) * 250) / 0xfffe;
+            input.analog[i][0] = config.lightgunxoffset + config.lightgunxratio * ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_X) + 0x7fff) * 250) / 0xfffe;
+            input.analog[i][1] = config.lightgunyoffset + config.lightgunyratio * ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_Y) + 0x7fff) * 250) / 0xfffe;
+
+            if (input.analog[i][0] > 250)
+			   input.analog[i][0] = 250;
+            if (input.analog[i][0] < 0)
+	           input.analog[i][0] = 0;
+            if (input.analog[i][1] > 250)
+	           input.analog[i][1] = 250;
+            if (input.analog[i][1] < 0)
+	           input.analog[i][1] = 0;
 
             if (input_state_cb(player, RETRO_DEVICE_MOUSE, 0, RETRO_DEVICE_ID_MOUSE_LEFT))
                temp |= INPUT_BUTTON1;
@@ -917,8 +944,17 @@ static void osd_input_update_internal(void)
             break;
 
          case DEVICE_GRAPHIC_BOARD:
-            input.analog[i][0] = ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_X) + 0x7fff) * 255) / 0xfffe;
-            input.analog[i][1] = ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_Y) + 0x7fff) * 255) / 0xfffe;
+            input.analog[i][0] = config.lightgunxoffset + config.lightgunxratio * ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_X) + 0x7fff) * 255) / 0xfffe;
+            input.analog[i][1] = config.lightgunyoffset + config.lightgunyratio * ((input_state_cb(player, RETRO_DEVICE_POINTER, 0, RETRO_DEVICE_ID_POINTER_Y) + 0x7fff) * 255) / 0xfffe;
+
+            if (input.analog[i][0] > 255)
+			   input.analog[i][0] = 255;
+            if (input.analog[i][0] < 0)
+	           input.analog[i][0] = 0;
+            if (input.analog[i][1] > 255)
+	           input.analog[i][1] = 255;
+            if (input.analog[i][1] < 0)
+	           input.analog[i][1] = 0;
 
             if (input_state_cb(player, RETRO_DEVICE_MOUSE, 0, RETRO_DEVICE_ID_MOUSE_LEFT))
                temp |= INPUT_GRAPHIC_PEN;
