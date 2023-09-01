@@ -1187,23 +1187,9 @@ struct retro_core_option_v2_definition option_defs_us[] = {
    },
    {
       "genesis_plus_gx_invert_mouse",
-      "Invert Mouse Y-Axis",
+      "Invert Mouse/XE-1 AP Y-Axis",
       NULL,
-      "Inverts the Y-axis of the MD Mouse input device type.",
-      NULL,
-      "input",
-      {
-         { "disabled", NULL },
-         { "enabled",  NULL },
-         { NULL, NULL },
-      },
-      "disabled"
-   },
-   {
-      "genesis_plus_gx_invert_xe1ap",
-      "Invert XE-1 AP Y-Axis",
-      NULL,
-      "Inverts the Y-axis of the left stick of the XE-1 AP input device type.",
+      "Inverts the Y-axis of the MD Mouse and the left stick of the XE-1 AP input device types.",
       NULL,
       "input",
       {

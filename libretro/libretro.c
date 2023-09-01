@@ -704,7 +704,7 @@ static void osd_input_update_internal_bitmasks(void)
 		     input.analog[i][1] = 128;
 	          else
 	          {
-		     if (config.invert_xe1ap == 1)
+		     if (config.invert_mouse == 1)
                         input.analog[i][1] = 255 - (config.lightgunyoffset + config.lightgunyratio * ((input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x7fff) * bitmap.viewport.h) / 0xfffe);
 		     else
 		        input.analog[i][1] = config.lightgunyoffset + config.lightgunyratio * ((input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) / 256.f); 
@@ -984,7 +984,7 @@ static void osd_input_update_internal(void)
 		     input.analog[i][1] = 128;
 	          else
 	          {
-		     if (config.invert_xe1ap == 1)
+		     if (config.invert_mouse == 1)
                         input.analog[i][1] = 255 - (config.lightgunyoffset + config.lightgunyratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) / 256.f);
 		     else
 		        input.analog[i][1] = config.lightgunyoffset + config.lightgunyratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y) + 0x8000) / 256.f; 
@@ -2133,15 +2133,6 @@ static void check_variables(bool first_run)
       config.invert_mouse = 0;
     else
       config.invert_mouse = 1;
-  }
-
-  var.key = "genesis_plus_gx_invert_xe1ap";
-  environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var);
-  {
-    if (!var.value || !strcmp(var.value, "disabled"))
-      config.invert_xe1ap = 0;
-    else
-      config.invert_xe1ap = 1;
   }
 
   var.key = "genesis_plus_gx_circular_paddle";

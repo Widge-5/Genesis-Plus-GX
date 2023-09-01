@@ -134,7 +134,6 @@ typedef struct
   float lightgunyratio;
   float lightgunxoffset;
   float lightgunyoffset;
-  uint8 invert_xe1ap;
   uint8 circularpaddle;
   uint8 gun_cursor;
   uint32 overclock;
