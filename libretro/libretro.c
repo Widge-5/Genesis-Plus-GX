@@ -581,7 +581,7 @@ static void osd_input_update_internal_bitmasks(void)
 	    {
 	       int rx = input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X);
                int ry = input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y);
-               input.analog[i][0] = (int)((- atan2(-ry,rx * 4 / 3) - (M_PI / 2)) / (2 * M_PI) * 256) % 256;
+               input.analog[i][0] = (int)((- atan2(-ry,rx * 4 / 3) - (M_PI / 2)) / (2 * M_PI) * 256 + 256) % 256;
 	    }
 	    else
 	       input.analog[i][0] = config.lightgunxoffset + config.lightgunxratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X) + 0x8000) / 256.f;
@@ -848,7 +848,7 @@ static void osd_input_update_internal(void)
 	    {
 	       int rx = input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X);
                int ry = input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y);
-               input.analog[i][0] = (int)((- atan2(-ry,rx * 4 / 3) - (M_PI / 2)) / (2 * M_PI) * 256) % 256;
+               input.analog[i][0] = (int)((- atan2(-ry,rx * 4 / 3) - (M_PI / 2)) / (2 * M_PI) * 256 + 256) % 256;
 	    }
 	    else
 	       input.analog[i][0] = config.lightgunxoffset + config.lightgunxratio * (input_state_cb(player, RETRO_DEVICE_LIGHTGUN, 0, RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X) + 0x8000) / 256.f;
